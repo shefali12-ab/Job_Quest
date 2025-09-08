@@ -2,6 +2,7 @@ package com.example.jobquest.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Table(name = "jobs")
@@ -9,7 +10,7 @@ public class Job {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "jobId")
+    @Column(name = "jobid")
     private Long jobId;
 
     @Column(name = "title")
@@ -28,42 +29,41 @@ public class Job {
     private int filled;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "companyid")
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name = "posted_by")
-    private User postedBy;
+    @JoinColumn(name = "userid")
+    private User user;
     
 
-    @Column(name = "created_at")
+    @Column(name = "createdat")
     private LocalDateTime createdAt;
 
-    /*
     @ManyToMany
     @JoinTable(
             name = "job_skills",
-            joinColumns = @JoinColumn(name = "jobId"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
+            joinColumns = @JoinColumn(name = "jobid"),
+            inverseJoinColumns = @JoinColumn(name = "skillid")
     )
     private Set<Skill> skills = new HashSet<>();
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Application> applications = new HashSet<>();
-    */
+
 
     // ===== Constructors =====
     public Job() {
     }
 
-    public Job(String title,String description, String location, int available, int filled, Company company, User postedBy) {
+    public Job(String title,String description, String location, int available, int filled, Company company, User user) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.available = available;
         this.filled = filled;
         this.company = company;
-        this.postedBy = postedBy;
+        this.user = user;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -118,11 +118,11 @@ public class Job {
         this.company = company; 
     }
 
-    public User getPostedBy() { 
-        return postedBy; 
+    public User getUser() { 
+        return user; 
     }
-    public void setPostedBy(User postedBy) { 
-        this.postedBy = postedBy; 
+    public void setUser(User user) { 
+        this.user = user; 
     }
 
     public LocalDateTime getCreatedAt() { 
@@ -130,5 +130,20 @@ public class Job {
     }
     public void setCreatedAt(LocalDateTime createdAt) { 
         this.createdAt = createdAt; 
+    }
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
+    }
+
+    public Set<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(Set<Application> applications) {
+        this.applications = applications;
     }
 }
