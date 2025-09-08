@@ -32,7 +32,7 @@ public class User{
     @Column(name="password" , nullable=false)
     private String password;
 
-    @Column(name="resumeUrl")
+    @Column(name="resumeurl")
     private String resumeUrl;
     
     @Column(name="designation")
@@ -47,7 +47,7 @@ public class User{
 
      @ManyToMany
     @JoinTable(
-        name = "user_skill", // join table name
+        name = "userskill", // join table name
         joinColumns = @JoinColumn(name = "userid"), // FK to User
         inverseJoinColumns = @JoinColumn(name = "skillid") // FK to Skill
     )
