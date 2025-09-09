@@ -1,8 +1,10 @@
 package com.example.jobquest.model;
+
+// package com.example.jobquest.model;
 // import com.example.jobquest.model.job;
 import jakarta.persistence.*;
-import java.util.Set;
- import java.util.HashSet;
+import java.util.*;
+ 
 
 
 @Entity
@@ -20,8 +22,8 @@ import java.util.Set;
     @ManyToMany(mappedBy = "skills") // inverse side
     private Set<User> users = new HashSet<>();
 
-//     @ManyToMany(mappedBy = "skills")
-//    private Set<Job> jobs = new HashSet<>();
+    @ManyToMany(mappedBy = "skills")
+   private Set<Job> jobs = new HashSet<>();
 
     public Skill() {
     }

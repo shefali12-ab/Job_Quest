@@ -1,11 +1,19 @@
 package com.example.jobquest.model;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
 import java.util.Set;
+<<<<<<< HEAD
  import java.util.HashSet;
+=======
+import java.util.HashSet;
+>>>>>>> master
 
 @Entity
 @Table(name = "users")
@@ -119,4 +127,8 @@ public class User{
         this.role = role;
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
