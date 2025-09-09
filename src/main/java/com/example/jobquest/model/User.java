@@ -53,7 +53,7 @@ public class User{
      @Column(name="role", nullable=false )
     private Role role= Role.JOB_SEEKER; //by default role ?, should keep it to job seeker or null 
 
-     @ManyToMany
+    @ManyToMany
     @JoinTable(
         name = "userskill", // join table name
         joinColumns = @JoinColumn(name = "userid"), // FK to User
