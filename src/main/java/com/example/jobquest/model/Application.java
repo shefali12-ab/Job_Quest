@@ -29,6 +29,7 @@ public class Application {
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.PENDING;
 	
+	@Column (name = "appliedat")
 	private LocalDateTime appliedAt;
 	
 	@PrePersist
