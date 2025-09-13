@@ -16,5 +16,21 @@ public class CompanyController {
     public List<Company> getAllCompanies(){
         return cs.getCompanies();
     }
+    @GetMapping("/companies/{companyId}")
+    public Company getCompanyById(@PathVariable int companyId){
+        return cs.getCompanyById(companyId);        
+    }
+    @PostMapping("/companies")
+    public Company addCompany(@RequestBody Company company){
+        return cs.addCompany(company);
+    }
+    @PutMapping("/companies/{companyId}")
+    public Company updateCompany(@PathVariable int companyId, @RequestBody Company company){
+        return cs.updateCompany(companyId, company);
+    }
+    @DeleteMapping("/companies/{companyId}/purge")
+    public void deleteCompany(@PathVariable int companyId){
+        cs.deleteCompany(companyId);
+    }
     
 }

@@ -1,4 +1,6 @@
+//skill.java
 package com.example.jobquest.model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 // package com.example.jobquest.model;
 // import com.example.jobquest.model.job;
@@ -20,9 +22,11 @@ import java.util.*;
     private String skillName;
 
     @ManyToMany(mappedBy = "skills") // inverse side
+    @JsonIgnoreProperties("skills") // to prevent infinite recursion during serialization
     private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "skills")
+    @JsonIgnoreProperties("skills") // to prevent infinite recursion during serialization
    private Set<Job> jobs = new HashSet<>();
 
     public Skill() {

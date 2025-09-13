@@ -3,6 +3,8 @@ package com.example.jobquest.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table (name = "application")
 public class Application {
@@ -20,6 +22,7 @@ public class Application {
 	
 	@ManyToOne
 	@JoinColumn (name = "jobid", referencedColumnName = "jobid")
+	@JsonIgnore
 	private Job job;
 	
 	@ManyToOne

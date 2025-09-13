@@ -4,6 +4,8 @@ package com.example.jobquest.model;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 import java.util.Set;
 import java.util.HashSet;
@@ -52,6 +54,8 @@ public class User{
         joinColumns = @JoinColumn(name = "userid"), // FK to User
         inverseJoinColumns = @JoinColumn(name = "skillid") // FK to Skill
     )
+    @JsonIgnoreProperties("users") // to prevent infinite recursion during serialization    
+
     private Set<Skill> skills = new HashSet<>();
     
     public User() {
@@ -118,6 +122,13 @@ public class User{
     }
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Set<Skill> getSkills() {
+       return skills;
+    }
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
     }
 
 }

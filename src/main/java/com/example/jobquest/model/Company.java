@@ -1,5 +1,9 @@
 package com.example.jobquest.model;
 
+import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // package com.example.JobQuest.Model;
 
 import jakarta.persistence.*;
@@ -12,7 +16,10 @@ public class Company {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column (name = "companyid")
-	private int companyId;
+	private long companyId;
+	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore  // prevents infinite recursion
+    private List<Job> jobs = new ArrayList<>();
 	
 	@Column (name = "name")
 	private String name;
@@ -25,7 +32,7 @@ public class Company {
 	
 	public Company () {}
 	
-	public Company(int companyId, String name, String industry, String website) {
+	public Company(long companyId, String name, String industry, String website) {
 		super();
 		this.companyId = companyId;
 		this.name = name;
@@ -33,14 +40,14 @@ public class Company {
 		this.website = website;
 	}
 
-	public int getCompanyId() {
+	public long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(int companyId) {
+	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -64,5 +71,12 @@ public class Company {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
+	public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
 
 }
