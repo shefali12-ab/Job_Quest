@@ -33,7 +33,13 @@ public class UserController{
         return userService.getUsersByRole(role);
     }
 
-    @PostMapping("/users")
+    // @PostMapping("/users")
+    // public User addUser(@RequestBody User user)
+    // {
+    //     return userService.addUser(user);
+    // }
+
+    @PostMapping("/register")
     public User addUser(@RequestBody User user)
     {
         return userService.addUser(user);
