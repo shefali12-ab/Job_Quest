@@ -114,7 +114,7 @@ public class UserService implements UserRepository{
         LocalDateTime oneDayAgo = LocalDateTime.now().minusDays(1);
         for(User u: users){
             if(u.getLastLogin() == null || u.getLastLogin().isBefore(oneDayAgo)){
-                jpadb.deleteById(u.getUserId().intValue());
+                jpadb.deleteById(u.getUserId());
             }
 
         } } catch(Exception e){

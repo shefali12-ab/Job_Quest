@@ -11,7 +11,7 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "jobid")
-    private Long jobId;
+    private int jobId;
 
     @Column(name = "title")
     private String title;
@@ -69,10 +69,10 @@ public class Job {
 
     // ===== Getters and Setters =====
 
-    public Long getJobId() { 
+    public int getJobId() { 
         return jobId; 
     }
-    public void setJobId(Long jobId) { 
+    public void setJobId(int jobId) { 
         this.jobId = jobId; 
     }
 
