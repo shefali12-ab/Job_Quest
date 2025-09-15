@@ -1,36 +1,48 @@
-// package com.example.jobquest.config;
+package com.example.jobquest.config;
 
-// import io.jsonwebtoken.Jwts;
-// import io.jsonwebtoken.SignatureAlgorithm;
-// import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 
-// import java.security.Key;
-// import java.util.Date;
+import java.security.Key;
+import java.util.Date;
 
-// import org.springframework.stereotype.Component;
+public class JwtUtil {
+    private static final String SECRET_KEY = "my4secretsecretsecretsecretkeyisveryverylonganditis123"; // min 256 bits
+    private static final long EXPIRATION = 1000 * 60 * 60; // 1 hour
 
-// @Component
-// public class JwtUtil {
+    private static Key getSigningKey() {
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
 
-//     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    public static String generateToken(String email, String role) {
+        return Jwts.builder()
+                .setSubject(email)            // Store username in token
+                .claim("role", role)             // Store role in token
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
 
-//     public String generateToken(String email, String role) {
-//         return Jwts.builder()
-//                 .setSubject(email)
-//                 .claim("role", role)
-//                 .setIssuedAt(new Date())
-//                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
-//                 .signWith(key)
-//                 .compact();
-//     }
+    public static Claims extractClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
-//     public String extractEmail(String token) {
-//         return Jwts.parserBuilder()
-//                 .setSigningKey(key)
-//                 .build()
-//                 .parseClaimsJws(token)
-//                 .getBody()
-//                 .getSubject();
-//     }
-// }
+    public static String extractRole(String token) {
+        return extractClaims(token).get("role", String.class);
+    }
+
+    public static boolean isTokenValid(String token) {
+        try {
+            extractClaims(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}
 

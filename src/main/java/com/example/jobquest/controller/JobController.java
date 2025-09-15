@@ -7,6 +7,8 @@ import com.example.jobquest.dto.JobResponse;
 import com.example.jobquest.model.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import java.util.*;
 
 @RestController
@@ -24,18 +26,21 @@ public class JobController{
         return jobService.getJobById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/jobs") //admin only
     public JobResponse addJob(@RequestBody Job job)
     {
         return jobService.addJob(job);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/jobs/{id}") //admin only
     public JobResponse updateJob(@PathVariable("id") int id, @RequestBody Job job)
     { 
         return jobService.updateJob(id,job);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/jobs/{id}") //admin only
     public void DeleteJobById(@PathVariable("id") int id)
     {
