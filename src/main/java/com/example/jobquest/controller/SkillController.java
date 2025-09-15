@@ -5,7 +5,7 @@ import com.example.jobquest.model.*;
 import com.example.jobquest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+// import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.*;
 @RestController
