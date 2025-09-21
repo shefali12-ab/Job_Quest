@@ -75,27 +75,48 @@ public class ApplicationService implements ApplicationRepository{
    }
 
    @Override
-   public ApplicationResponse applyToAJob(Application a){
+   public ApplicationResponse applyToAJob(int jobId, int id){
 
       // if (!"JOB_SEEKER".equalsIgnoreCase(user.getRole())) {
       //    throw new NotJobSeekerException("Only job seekers can apply");
       // }
-      int i = a.getJob().getJobId();
-      Job j = jpadb2.findById(i).orElseThrow(() -> new RuntimeException("Job not found"));;
-      if (!j.isOpen()) {
-        throw new RuntimeException("Job is Closed, No more applications are accepted");
-      }
-      a.setJob(j);
-      int u = a.getUser().getUserId();
-      User m = jpadb1.findById(u).orElseThrow(() -> new RuntimeException("User not found"));
-      a.setUser(m);
-      jpadb.save(a);
+      // int i = a.getJob().getJobId();
+      // Job j = jpadb2.findById(i).orElseThrow(() -> new RuntimeException("Job not found"));;
+      // if (!j.isOpen()) {
+      //   throw new RuntimeException("Job is Closed, No more applications are accepted");
+      // }
+      // a.setJob(j);
+      // int u = a.getUser().getUserId();
+      // User m = jpadb1.findById(u).orElseThrow(() -> new RuntimeException("User not found"));
+      // a.setUser(m);
+      // jpadb.save(a);
 
-      int applicationsCount = jpadb.countByJobJobId(j.getJobId());
-      if (applicationsCount >= 1.5 * j.getAvailable()) {
+      // int applicationsCount = jpadb.countByJobJobId(j.getJobId());
+      // if (applicationsCount >= 1.5 * j.getAvailable()) {
+      //   j.setOpen(false);
+      //   jpadb2.save(j);
+      // }
+
+          Job j = jpadb2.findById(jobId)
+                   .orElseThrow(() -> new RuntimeException("Job not found"));
+
+    if (!j.isOpen()) {
+        throw new RuntimeException("Job is Closed, No more applications are accepted");
+    }
+
+    User m = jpadb1.findById(id)
+                   .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Application a = new Application();
+    a.setJob(j);
+    a.setUser(m);
+    jpadb.save(a);
+
+    int applicationsCount = jpadb.countByJobJobId(j.getJobId());
+    if (applicationsCount >= 1.5 * j.getAvailable()) {
         j.setOpen(false);
         jpadb2.save(j);
-      }
+    }
 
       return new ApplicationResponse(a);
    }

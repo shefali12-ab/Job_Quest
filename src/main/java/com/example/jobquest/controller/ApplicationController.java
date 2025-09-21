@@ -6,10 +6,12 @@ import com.example.jobquest.dto.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.*;
 // import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class ApplicationController {
 
@@ -22,8 +24,8 @@ public class ApplicationController {
         return cs.getApplicationsByJobId(jobId);
     }
 
-    @GetMapping("/applications/users/{userId}") //respective user only
-    public List<ApplicationResponse> getApplicationsByUserId(@PathVariable ("userId") int id){
+    @GetMapping("/applications/users/user") //respective user only
+    public List<ApplicationResponse> getApplicationsByUserId(@AuthenticationPrincipal int id){
         return cs.getApplicationsByUserId(id);
     }
 
@@ -33,9 +35,14 @@ public class ApplicationController {
         return cs.getApplicationStats(jobId);
     }
 
-    @PostMapping("/applications") //jobseeker only
-    public ApplicationResponse applyToAJob(@RequestBody Application a){
-        return cs.applyToAJob(a);
+    // @PostMapping("/applications") //called when user clicks on apply button in jobs
+    // public ApplicationResponse applyToAJob(@RequestBody Application a){
+    //     return cs.applyToAJob(a);
+    // }
+
+    @PostMapping ("/applications/{jobId}/apply")
+    public ApplicationResponse applyToAJob(@PathVariable("jobId") int jobId, @AuthenticationPrincipal int id){
+        return cs.applyToAJob(jobId, id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -51,8 +58,8 @@ public class ApplicationController {
         return cs.bulkUpdateApplicationStatus(r);
     }
 
-    @DeleteMapping ("/applications/{id}") //respective user
-    public void deleteUserApplication (@PathVariable ("id") int id){
+    @DeleteMapping ("/applications/user/{applicationId}") //respective user
+    public void deleteUserApplication (@PathVariable("applicationId") int id){
         cs.deleteUserApplication(id);
     }
 }

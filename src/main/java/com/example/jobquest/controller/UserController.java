@@ -6,9 +6,11 @@ import com.example.jobquest.model.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.*;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class UserController{
 
@@ -20,8 +22,8 @@ public class UserController{
         return userService.getAllUsers();
     }
 
-    @GetMapping("/users/{id}") 
-    public User getUserById(@PathVariable("id") int id){
+    @GetMapping("/users/user") 
+    public User getUserById(@AuthenticationPrincipal int id){
         return userService.getUserById(id);
     }
 
@@ -47,7 +49,7 @@ public class UserController{
         return userService.updateUser(id,user);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/users/{id}") //admin only
     public void DeleteUserById(@PathVariable("id") int id){
         userService.DeleteUserById(id);

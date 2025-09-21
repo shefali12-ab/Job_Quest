@@ -20,7 +20,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.equals("/login"); // ✅ skip filter for login
+        return path.equals("/login") || path.equals("/register"); // ✅ skip filter for login
     }
 
 
@@ -34,12 +34,13 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7); // Remove "Bearer " prefix
             if (JwtUtil.isTokenValid(token)) {
+                int userId = JwtUtil.extractUserId(token);
                 String role = JwtUtil.extractRole(token);
 
                 // Create authentication object with role
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
-                                null, null, List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                                userId, null, List.of(new SimpleGrantedAuthority("ROLE_" + role))
                         );
 
                 // Set authentication in context

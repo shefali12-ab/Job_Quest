@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.*;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class CompanyController {
 
@@ -42,4 +43,9 @@ public class CompanyController {
         cs.deleteCompany(companyId);
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/companies/jobs")
+    public Map<Integer, Map<String, Integer>> getJobCounts() {
+        return cs.getJobCountsByCompany();
+    }
 }

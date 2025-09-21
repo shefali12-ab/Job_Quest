@@ -53,7 +53,7 @@ public class JobResponse {
 
  
     public JobResponse(int jobId, String jobTitle, boolean isOpen, String description, String location, int companyId, String companyName, int positionsAvailable, int positionsFilled,
-                                LocalDateTime createdAt) {
+                                LocalDateTime createdAt, Set<Skill> skills) {
         this.jobId = jobId;
         this.jobTitle = jobTitle;
         this.isOpen = isOpen;
@@ -64,6 +64,7 @@ public class JobResponse {
         this.positionsAvailable = positionsAvailable;
         this.positionsFilled = positionsFilled;
         this.createdAt = createdAt;
+        this.skills = skills;
     }
 
 

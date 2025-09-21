@@ -2,6 +2,7 @@ package com.example.jobquest.repository;
 
 import java.util.*;
 import com.example.jobquest.model.Company;
+import com.example.jobquest.model.Job;
 
 public interface CompanyRepository {
 
@@ -10,4 +11,6 @@ public interface CompanyRepository {
     Company addCompany(Company company);
     Company updateCompany(int companyId, Company company);
     void deleteCompany(int companyId);
+    Map<Integer, Map<String, Integer>> getJobCountsByCompany();
+    
 }

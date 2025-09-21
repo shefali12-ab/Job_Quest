@@ -15,6 +15,9 @@ public class CompanyService implements CompanyRepository{
 
    @Autowired
    private CompanyJpaRepository jpadb;
+
+    @Autowired
+   private JobJpaRepository jpadb1;
    
    @Override
    public List<Company> getCompanies(){
@@ -54,4 +57,20 @@ public class CompanyService implements CompanyRepository{
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
    }
+
+   @Override
+    public Map<Integer, Map<String, Integer>> getJobCountsByCompany() {
+        List<Company> companies = jpadb.findAll();
+        Map<Integer, Map<String, Integer>> result = new HashMap<>();
+
+        for (Company c : companies) {
+            Map<String, Integer> counts = new HashMap<>();
+            counts.put("totalJobs", jpadb1.countByCompany(c));
+            counts.put("openJobs", jpadb1.countByCompanyAndIsOpenTrue(c));
+            result.put(c.getCompanyId(), counts);
+        }
+
+
+        return result;
+    }
 }

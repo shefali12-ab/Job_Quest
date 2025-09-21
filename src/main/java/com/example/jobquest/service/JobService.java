@@ -44,7 +44,8 @@ public class JobService implements JobRepository{
                         job.getCompany().getName(),
                         job.getAvailable(),
                         job.getFilled(),
-                        job.getCreatedAt()
+                        job.getCreatedAt(),
+                        job.getSkills()
                        )).toList();
    }
 
@@ -194,7 +195,8 @@ public class JobService implements JobRepository{
                         job.getCompany().getName(),
                         job.getAvailable(),
                         job.getFilled(),
-                        job.getCreatedAt()
+                        job.getCreatedAt(),
+                        job.getSkills()
                        )).toList();
     }
 
@@ -216,7 +218,8 @@ public class JobService implements JobRepository{
                         job.getCompany().getName(),
                         job.getAvailable(),
                         job.getFilled(),
-                        job.getCreatedAt()
+                        job.getCreatedAt(),
+                        job.getSkills()
                        )).toList();
     }
 }

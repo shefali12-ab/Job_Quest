@@ -23,4 +23,14 @@ public interface JobJpaRepository extends JpaRepository <Job, Integer>{
                          Sort sort); 
     List<Job> findByIsOpenFalse();
     List<Job> findByIsOpenTrue();
+
+    int countByCompany(Company company);
+    int countByCompanyAndIsOpenTrue(Company company);
+
+
+    // @Query("SELECT COUNT(j) FROM Job j WHERE j.company.companyId = :companyId")
+    // int countByCompanyId(@Param("companyId") int companyId);
+
+    // @Query("SELECT COUNT(j) FROM Job j WHERE j.company.companyId = :companyID AND j.isOpen = true")
+    // int countOpenByCompanyId(@Param ("companyId") int companyId);
 }

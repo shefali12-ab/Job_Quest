@@ -12,7 +12,8 @@ public interface ApplicationRepository {
 
     JobResponse getApplicationStats(int jobId);
 
-    ApplicationResponse applyToAJob(Application a);
+    // ApplicationResponse applyToAJob(Application a);
+    ApplicationResponse applyToAJob(int jobId, int id);
 
     ApplicationResponse modifyApplicationStatus (int id, String s);
 
